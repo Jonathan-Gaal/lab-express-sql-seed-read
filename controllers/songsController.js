@@ -1,7 +1,12 @@
 const express = require("express");
 const { all } = require("../app");
 const songs = express.Router();
-const { getAllSongs, getOneSong, createSong } = require("../queries/songs");
+const {
+  getAllSongs,
+  getOneSong,
+  createSong,
+  deleteSong,
+} = require("../queries/songs");
 const { checkTitle, checkBoolean } = require("../validations/checkSongs");
 
 // INDEX
@@ -30,6 +35,16 @@ songs.post("/", checkTitle, checkBoolean, async (req, res) => {
     res.json(song);
   } catch (err) {
     res.status(400).json({ error: err });
+  }
+});
+
+songs.delete("/:id", async (req, res) => {
+  const { id } = req.params;
+  const deletedSong = await deleteSong(id);
+  if (deletedSong.id) {
+    res.status(200).json(deletedSong);
+  } else {
+    res.status(404).json("Song not found");
   }
 });
 
