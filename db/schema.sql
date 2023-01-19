@@ -8,5 +8,6 @@ CREATE TABLE songs (
     title TEXT NOT NULL,
     artist TEXT, 
     genre VARCHAR(100),
+    video_url TEXT,
     is_favorite BOOLEAN
 );
