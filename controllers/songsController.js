@@ -44,12 +44,14 @@ songs.post("/", checkTitle, checkBoolean, validateURL, async (req, res) => {
 });
 
 songs.delete("/:id", async (req, res) => {
-  const { id } = req.params;
-  const deletedSong = await deleteSong(id);
-  if (deletedSong.id) {
-    res.status(200).json(deletedSong);
-  } else {
-    res.status(404).json({ error: song.message });
+  try {
+    const { id } = req.params;
+    const deletedSong = await deleteSong(id);
+    if (deletedSong.id) {
+      res.status(200).json(deletedSong);
+    }
+  } catch (err) {
+    res.status(404).json({ error: err });
   }
 });
 
