@@ -1,9 +1,12 @@
 const db = require("../db/dbConfig");
 
 //db.any is used since the amount of reviews is not just ONE but is indeterminate
-const getAllComments = async () => {
+const getAllComments = async (song_id) => {
   try {
-    const allComments = await db.any("SELECT * FROM comments");
+    const allComments = await db.any(
+      "SELECT * FROM comments WHERE song_id=$1",
+      song_id
+    );
     return allComments;
   } catch (err) {
     return err;

@@ -1,5 +1,5 @@
 const express = require("express");
-const comments = express.Router();
+const comments = express.Router({ mergeParams: true });
 const {
   getAllComments,
   updateComment,
@@ -10,11 +10,12 @@ const {
 
 //INDEX
 comments.get("/", async (req, res) => {
-  const allComments = await getAllComments();
-  if (allComments[0]) {
+  const { songId } = req.params;
+  try {
+    const allComments = await getAllComments(songId);
     res.status(200).json(allComments);
-  } else {
-    res.status(500).json({ error: "Not found" });
+  } catch (err) {
+    res.status(500).json({ error: err });
   }
 });
 
@@ -24,7 +25,7 @@ comments.get("/:id", async (req, res) => {
   if (!comment.message) {
     res.status(200).json(comment);
   } else {
-    res.status.json({ error: comment.message });
+    res.status(500).json({ error: comment.message });
   }
 });
 

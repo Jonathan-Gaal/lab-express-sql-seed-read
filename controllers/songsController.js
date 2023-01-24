@@ -14,6 +14,9 @@ const {
   validateURL,
 } = require("../validations/checkSongs");
 
+const commentsController = require("./commentsController");
+songs.use("/:songId/comments", commentsController);
+
 // INDEX
 songs.get("/", async (req, res) => {
   const allSongs = await getAllSongs();

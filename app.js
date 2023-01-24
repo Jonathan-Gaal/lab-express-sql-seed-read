@@ -5,7 +5,6 @@ const app = express();
 const morgan = require("morgan");
 // Bookmarks ROUTES
 const songsController = require("./controllers/songsController");
-const commentsController = require("./controllers/commentsController");
 
 // CONFIGURATION
 
@@ -14,7 +13,6 @@ app.use(cors());
 app.use(express.json());
 app.use(morgan("tiny"));
 app.use("/songs", songsController);
-app.use("/comments", commentsController);
 
 // ROUTES
 app.get("/", (req, res) => {
